@@ -1,91 +1,118 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "TheDarkDocs",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#ff0000",
+    "light": "#ff0000",
+    "dark": "#ff0000",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#ff0000",
+      "to": "#ff0000"
     }
   },
   "topbarLinks": [
     {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "name": "💖 Sponsoring",
+      "url": "https://github.com/sponsors/darkterminal"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "GitHub Profile",
+    "url": "https://github.com/darkterminal"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Extensions",
+      "url": "dark-extensions"
+    },
+    {
+      "name": "Packages",
+      "url": "dark-packages"
     }
   ],
   "anchors": [
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "introduction"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/darkterminal"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "DEV Blog",
+      "icon": "dev",
+      "url": "https://dev.to/darkterminal"
+    },
+    {
+      "name": "Discussions",
+      "icon": "comments",
+      "url": "https://github.com/darkterminal/darkterminal/discussions"
     }
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "TheDarkDocs",
+      "pages": ["introduction", "what-the-punk", "oh-my-punk"]
+    },
+    {
+      "group": "Unessentials",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "unessentials/htmx-snippets",
+        "unessentials/javascript-snippets",
+        "unessentials/php-snippets",
+        "unessentials/rust-snippets"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "LibSQL Extension",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+        "dark-extensions/introduction",
+        "dark-extensions/configuration",
+        "dark-extensions/in-memory-connection",
+        "dark-extensions/local-connection",
+        "dark-extensions/remote-connection",
+        "dark-extensions/remote-replica-connection",
+        {
+          "group": "LibSQL Class",
+          "pages": [
+            "dark-extensions/libsql-class/introduction",
+            "dark-extensions/libsql-class/constructor",
+            "dark-extensions/libsql-class/version",
+            "dark-extensions/libsql-class/changes",
+            "dark-extensions/libsql-class/isAutocommit",
+            "dark-extensions/libsql-class/execute",
+            "dark-extensions/libsql-class/executeBatch",
+            "dark-extensions/libsql-class/query",
+            "dark-extensions/libsql-class/transaction",
+            "dark-extensions/libsql-class/prepare",
+            "dark-extensions/libsql-class/close",
+            "dark-extensions/libsql-class/sync"
+          ]
+        },
+        "dark-extensions/libsql-statement",
+        "dark-extensions/libsql-transaction"
       ]
     },
     {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference/introduction"
-      ]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
-      ]
+      "group": "Packages Documentation",
+      "pages": ["dark-packages/introduction"]
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "x": "https://x.com/panggilmeiam",
+    "github": "https://github.com/darkterminal"
+  },
+  "feedback": {
+    "suggestEdit": true,
+    "thumbsRating": true,
+    "raiseIssue": true
   }
 }

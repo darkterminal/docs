@@ -1,0 +1,130 @@
+---
+title: 'Remote Connection'
+description: "Connect LibSQL Remote databases using the **LibSQL PHP Extension**"
+---
+
+When establishing connections to remote databases using the **LibSQL PHP Extension**, you have two options available. Both options utilize the LibSQL class constructor to create a new database connection object.
+
+## Configuration
+
+To create remote connection you need to prepare your Turso/LibSQL Database `DATABASE_URL` and `DATABASE_AUTH_TOKEN`.
+
+If you already have Turso/LibSQL Database account, do following this commands:
+
+Get the database URL:
+```shell
+turso db show --url <database-name>
+```
+
+Get the database authentication token:
+```shell
+turso db tokens create <database-name>
+```
+
+Assign credentials to the environment variables inside `.env` or somewhere else.
+```env
+DATABASE_URL=
+DATABASE_AUTH_TOKEN=
+```
+
+If you doesn't have Turso/LibSQL Database Account, [create one here](https://docs.turso.tech/quickstart) it's free for individual developers just getting started!
+
+- 500 Databases
+- 9GB of total storage
+- 1 billion row reads
+- Unlimited Embedded Replicas
+
+See for other plan [Turso Database Pricing](https://turso.tech/pricing).
+
+Connecting to a remote database is equally effortless. Choose between 2 options:
+
+   1. **Standard DSN Connection with `libsql://`:**
+      ```php
+      $db = new LibSQL("libsql:dbname=libsql://database-org.turso.io;authToken=random-token");
+      ```
+      
+   2. **Standard DSN Connection with `https://`:**
+      ```php
+      $db = new LibSQL("libsql:dbname=https://database-org.turso.io;authToken=random-token");
+      ```
+
+For remote connections, this option utilizes the `libsql://` or `https://` protocol in the DSN string. The format is:
+```php
+libsql:dbname=libsql://database-org.turso.io;authToken=random-token
+```
+It provides a straightforward approach to connect to remote databases.
+
+Here the usage implementation:
+```php
+$db_name = getenv('DATABASE_URL');
+$db_auth_token = getenv('DATABASE_AUTH_TOKEN');
+$db = new LibSQL("libsql:dbname={$db_name};authToken={$db_auth_token}");
+```
+
+<Info>**Refference**: See detail [Remote Connection Configuration](/dark-extensions/configuration#remote-connection)</Info>
+
+## Connect with `libsql://` Protocol
+
+```php
+$db = new LibSQL("libsql:dbname=libsql://database-org.turso.io;authToken=random-token");
+```
+
+- **Usage Explanation:**
+  - This option employs the `libsql://` protocol in the DSN string to connect to the remote database.
+  - The DSN string specifies the database name as `libsql://database-org.turso.io`.
+  - Additionally, it requires an authentication token (`authToken`) for secure access, provided as `random-token`.
+
+- **Steps to Use:**
+  1. Replace `"libsql://database-org.turso.io"` with the actual database name or path you intend to connect to.
+  2. Ensure you have the correct authentication token (`authToken`) for accessing the database securely.
+  3. Use this connection object (`$db`) to interact with the specified remote database in your PHP application.
+
+## Connect with `https://` Protocol
+
+```php
+$db = new LibSQL("libsql:dbname=https://database-org.turso.io;authToken=random-token");
+```
+
+- **Usage Explanation:**
+  - Similar to Option 1, this option utilizes a DSN string with the `https://` protocol to establish a connection.
+  - The DSN string specifies the database name or path as `https://database-org.turso.io`.
+  - It also requires an authentication token (`authToken`) provided as `random-token` for secure access.
+
+- **Steps to Use:**
+  1. Replace `"https://database-org.turso.io"` with the actual database name or path you wish to connect to.
+  2. Ensure you have the correct authentication token (`authToken`) for accessing the database securely.
+  3. Utilize the created connection object (`$db`) to interact with the designated remote database within your PHP application.
+
+By following the steps outlined above, you can seamlessly establish remote connections to databases using either the `libsql://` or `https://` protocols with the **LibSQL PHP Extension**. Ensure accurate configuration of the DSN string and authentication token for successful connection establishment and secure data access.
+
+## Usage Example
+
+```php
+<?php
+
+$db_name = getenv('DATABASE_URL');
+$db_auth_token = getenv('DATABASE_AUTH_TOKEN');
+$db = new LibSQL("libsql:dbname={$db_name};authToken={$db_auth_token}");
+
+// Create table
+$sql = "CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT, 
+  age INTEGER
+)";
+$db->execute($sql);
+
+// Insert data
+$db->execute("INSERT INTO users (name, age) VALUES ('Diana Hooggan', 24)");
+
+// Read data
+$results = $db->query("SELECT * FROM users");
+
+// Display data
+foreach ($results['rows'] as $row) {
+    echo "ID: " . $row['id'] . ", Name: " . $row['name'] . ", Age: " . $row['age'] . "\n";
+}
+
+// Close database
+$db->close();
+```

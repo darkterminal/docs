@@ -1,0 +1,152 @@
+---
+title: 'Remote Replica Connection'
+description: "Connect LibSQL Remote Replica / Embedded Replica databases using the **LibSQL PHP Extension**"
+---
+
+Turso's (LibSQL) embedded replicas are a game-changer for SQLite, making it more flexible and suitable for various environments. This feature shines especially for those using VMs or VPS, as it lets you replicate a Turso database right within your applications without needing to relying on Turso's (LibSQL) [edge network](https://docs.turso.tech/features/data-edge). For mobile applications, where stable connectivity is a challenge, embedded replicas are invaluable as they allow uninterrupted access to the local database.
+
+Embedded replicas provide a smooth switch between local and remote database operations, allowing the same database to adapt to various scenarios effortlessly. They also ensure speedy data access by syncing local copies with the remote database, enabling microsecond-level read operations — a significant advantage for scenarios demanding quick data retrieval.
+
+## How it works
+
+1. You configure a local file to be your main database.
+
+   - The `url` parameter in the client configuration.
+
+2. You configure a remote database to sync with.
+
+   - The `syncUrl` parameter in the client configuration.
+
+3. You read from a database:
+
+   - Reads are always served from the local replica configured at `url`.
+
+4. You write to a database:
+
+   - Writes are always sent to the remote primary database configured at `syncUrl`.
+   - Any write transactions with reads are also sent to the remote primary database.
+   - Once the write is successful, the local database is updated with the changes automatically (read your own writes &mdash; can be disabled).
+
+## Things to know
+
+- Do not open the local database while the embedded replica is syncing. This can lead to data corruption.
+- In certain contexts, such as serverless environments without a filesystem, you can't use embedded replicas.
+
+To set up a replica connection for distributed systems, the configuration **need to formatted as array** follow these steps:
+
+**0. Remote Turso/LibSQL Database**
+
+If you already have Turso/LibSQL Database account, do following this commands:
+
+Get the database URL:
+```shell
+turso db show --url <database-name>
+```
+
+Get the database authentication token:
+```shell
+turso db tokens create <database-name>
+```
+
+If you doesn't have Turso/LibSQL Database Account, [create one here](https://docs.turso.tech/quickstart) it's free for individual developers just getting started!
+
+- 500 Databases
+- 9GB of total storage
+- 1 billion row reads
+- Unlimited Embedded Replicas
+
+See for other plan [Turso Database Pricing](https://turso.tech/pricing).
+
+**1. Defined environment variables**
+
+```env
+DATABASE_FILE=<relative-path-filename>
+DATABASE_URL=<turso-libsql-database-url> # generate from Get the database URL command
+DATABASE_AUTH_TOKEN=<turso-libsql-auth-token> # generate from Get the database authentication token command
+DATABASE_SYNC_INTERVAL=5
+DATABASE_READ_YOUR_WRITES=true
+DATABASE_ENCRYPTION_KEY=
+```
+
+**2. Define the configuration array with the required parameters**
+
+This configuration is designed for synchronizing and replicating data in distributed environments. It requires an array configuration with the following key-value pairs:
+
+```php
+$config = [
+   "url" => "file:" . getenv('DATABASE_FILE'),
+   "authToken" => getenv('DATABASE_URL'),
+   "syncUrl" => getenv('DATABASE_AUTH_TOKEN'),
+   "syncInterval" => getenv('DATABASE_SYNC_INTERVAL'),
+   "read_your_writes" => getenv('DATABASE_READ_YOUR_WRITES'),
+   "encryptionKey" => getenv('DATABASE_ENCRYPTION_KEY')
+];
+```
+
+## Remote Replica Configuration
+
+<ResponseField name="url" type="string" required>
+  Specifies the local database path filename using relative path `/home/turso/app/database.db` remember the back-slash at the begining.
+</ResponseField>
+
+<ResponseField name="authToken" type="string" required>
+  Authentication token for secure access. Generate from Get the database authentication token command
+</ResponseField>
+
+<ResponseField name="syncUrl" type="string" required>
+  URL for synchronization purposes. generate from Get the database URL command
+</ResponseField>
+
+<ResponseField name="syncInterval" type="integer">
+  Integer value representing synchronization interval in seconds (optional, default: `5`).
+</ResponseField>
+
+<ResponseField name="read_your_writes" type="boolean">
+  Boolean value indicating whether to read your writes (optional, default: `true`).
+</ResponseField>
+
+<ResponseField name="encryptionKey" type="string">
+  String value for encryption purposes (optional, default: empty).
+</ResponseField>
+
+## Usage Example
+
+```php
+<?php
+
+$config = [
+   "url" => "file:" . getenv('DATABASE_FILE'),
+   "authToken" => getenv('DATABASE_URL'),
+   "syncUrl" => getenv('DATABASE_AUTH_TOKEN'),
+   "syncInterval" => getenv('DATABASE_SYNC_INTERVAL'),
+   "read_your_writes" => getenv('DATABASE_READ_YOUR_WRITES'),
+   "encryptionKey" => getenv('DATABASE_ENCRYPTION_KEY')
+];
+$db = new LibSQL($config);
+
+// Create table
+$sql = "CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT, 
+  age INTEGER
+)";
+$db->execute($sql);
+
+// Insert data
+$db->execute("INSERT INTO users (name, age) VALUES ('Diana Hooggan', 24)");
+
+// Read data
+$results = $db->query("SELECT * FROM users");
+
+// Display data
+foreach ($results['rows'] as $row) {
+    echo "ID: " . $row['id'] . ", Name: " . $row['name'] . ", Age: " . $row['age'] . "\n";
+}
+
+// Close database
+$db->close();
+```
+
+<Note>
+You should call `$db->sync()` in the background whenever your application wants to sync the remote and local embedded replica. For example, you can call it every 5 minutes or every time the application starts.
+</Note>

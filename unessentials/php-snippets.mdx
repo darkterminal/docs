@@ -1,0 +1,175 @@
+---
+title: 'PHP Snippets'
+description: 'You call it snippet? Eww... This is a metaphor!'
+icon: 'php'
+---
+
+## Block Bad Words
+
+<CodeGroup>
+
+```php bbw.php
+<?php
+
+function bbw(string $words): string {
+    
+    $blocked_words = ['asu','tai','babi','bajingan'];
+    
+    $filter = "/(\b|[0-9_])(".implode('|',$blocked_words).")(\b|[0-9_])/i";
+    $sensor = "***";
+    
+    $result = preg_replace($filter, $sensor, $words);
+    return $result;
+    
+}
+```
+
+```php Usage Example
+<?php
+
+$words = "Cen asu kok kowe!";
+echo bbw($words);
+```
+
+</CodeGroup>
+
+### The Explanation
+
+This function is like your super-strict, no-nonsense grandma who doesn't want you using any naughty words. Let's see what each part does:
+
+**The Function Definition:**
+```php
+function bbw(string $words)
+```
+This is the entrance to the grandma's house. You give her a string of words, and she's ready to clean it up.
+
+**Blocked Words List:**
+```php
+$blocked_words = ['asu','tai','babi','bajingan'];
+```
+Here's grandma's blacklist of words you definitely shouldn't be saying. These are the words she wants to catch.
+
+**The Magic Filter:**
+```php
+$filter = "/(\b|[0-9_])(".implode('|',$blocked_words).")(\b|[0-9_])/i";
+```
+This is grandma's secret sauce—a filter that looks for any of the bad words surrounded by word boundaries (`\b`), numbers, or underscores. It's like having a super-sensitive radar that can spot bad words in any form.
+
+**The Sensor:**
+```php
+$sensor = "***";
+```
+This is grandma's solution: whenever she finds a bad word, she replaces it with stars. It's like putting a bar of soap in your mouth, but less gross.
+
+**Cleansing the Words:**
+```php
+$result = preg_replace($filter, $sensor, $words);
+```
+Grandma applies her filter to the words you gave her. Any bad words she finds get scrubbed out with her sensor stars.
+
+**Return the Clean Version:**
+```php
+return $result;
+```
+Finally, she hands back the cleaned-up version of your sentence, free from any naughty words. You can go back to your friends and use it without getting a scolding!
+
+### In Summary
+
+This function `bbw` (maybe it stands for "_Better Beep Words_"?) takes a string, checks it for any bad words from a predefined list, and replaces those words with `***`. It's like having an automatic censor that ensures your language stays clean and grandma-approved.
+
+## Check Provider By Phone Number
+
+<CodeGroup>
+
+```php check_provider.php
+<?php
+
+function check_provider(int $number): string {
+    $telkomsel = '/^(0811|0812|0813|0821|0822|0852|0853|0823|0851)/';
+    $indosat = '/^(0814|0815|0816|0855|0856|0857|0858)/';
+    $xl = '/^(0817|0818|0819|0859|0877|0878)/';
+    $axis = '/^(0838|0831|0832|0833)/';
+    $three = '/^(0895|0896|0897|0898|0899)/';
+    $smartfreen = '/^(0881|0882|0883|0884|0885|0886|0887|0888|0889)/';
+    $ceria = '/^(0828)/';
+
+    if (preg_match($telkomsel, $number)) {
+        return 'Provider Telkomsel';
+    } elseif (preg_match($indosat, $number)) {
+        return 'Provider Indosat';
+    } elseif (preg_match($xl, $number)) {
+        return 'Provider XL';
+    } elseif (preg_match($axis, $number)) {
+        return 'Provider Axis';
+    } elseif (preg_match($three, $number)) {
+        return 'Provider 3 (Three)';
+    } elseif (preg_match($smartfreen, $number)) {
+        return 'Provider Smartfreen';
+    } elseif (preg_match($ceria, $number)) {
+        return 'Provider Ceria';
+    } else {
+        return 'Unknown Provider';
+    }
+}
+```
+
+```php Usage Example
+<?php
+
+$number = '08123456789';
+echo check_provider($number);
+```
+
+</CodeGroup>
+
+### The Explanation
+
+**The Function Definition**
+
+This function is like a detective trying to figure out which phone provider a given number belongs to. It takes a phone number as input and returns the corresponding provider.
+
+```php
+function check_provider($number)
+```
+
+**The Provider Patterns**
+
+These are like the wanted posters for each phone provider. Each regular expression is a pattern that matches phone numbers associated with a specific provider.
+
+```php
+$telkomsel = '/^(0811|0812|0813|0821|0822|0852|0853|0823|0851)/';
+$indosat = '/^(0814|0815|0816|0855|0856|0857|0858)/';
+$xl = '/^(0817|0818|0819|0859|0877|0878)/';
+$axis = '/^(0838|0831|0832|0833)/';
+$three = '/^(0895|0896|0897|0898|0899)/';
+$smartfreen = '/^(0881|0882|0883|0884|0885|0886|0887|0888|0889)/';
+$ceria = '/^(0828)/';
+```
+
+**The Investigation**
+
+Here, our detective uses each wanted poster (regular expression) to check if the provided phone number matches any of them. If a match is found, the detective concludes that the number belongs to the corresponding provider.
+
+```php
+if (preg_match($telkomsel, $number)) {
+    return 'Provider Telkomsel';
+} elseif (preg_match($indosat, $number)) {
+    return 'Provider Indosat';
+} elseif (preg_match($xl, $number)) {
+    return 'Provider XL';
+} elseif (preg_match($axis, $number)) {
+    return 'Provider Axis';
+} elseif (preg_match($three, $number)) {
+    return 'Provider 3 (Three)';
+} elseif (preg_match($smartfreen, $number)) {
+    return 'Provider Smartfreen';
+} elseif (preg_match($ceria, $number)) {
+    return 'Provider Ceria';
+} else {
+    return 'Unknown Provider';
+}
+```
+
+### In Summary
+
+This function `check_provider` is like a detective with a bunch of wanted posters, trying to match a given phone number to a specific phone provider. It's a fun way to determine who's behind a phone number!

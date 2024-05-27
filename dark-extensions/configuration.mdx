@@ -1,0 +1,188 @@
+---
+title: 'Configuration'
+description: "LibSQL have various connection flavors that allow you to improved in such condition and needs. Let's break-down each of those flavors."
+---
+
+## Types
+
+LibSQL has 4 different connection types which allow developers to organize them according to their needs and conditions when carrying out the development process:
+
+- **In-Memory Connection** - This type of connection is used for databases that reside entirely in memory. It is the fastest type of connection since it does not involve disk I/O operations. In-memory databases are typically used for temporary data storage, testing, or caching purposes where persistence across application restarts is not required.
+- **Local Connection** - A local connection refers to a database that is stored on the local filesystem. This is the traditional mode of operation for SQLite databases, where the database file is accessed directly by the application. Local connections are suitable for applications that require a lightweight, file-based database without the need for a full database server setup.
+- **Remote Connection** - Remote connections are used to access a database over a network. In the context of LibSQL, this involves using the sqld server to access SQLite databases over HTTP. This allows applications to interact with a SQLite database as if it were a client-server database, enabling use cases like serverless applications or shared database access across multiple instances.
+- **Remote Replica/Embedded Replica Connection** - This type of connection is used to synchronize a local replica of a remote database. It allows an application to maintain a local copy of the database that is kept in sync with a primary database located on a remote server. This is particularly useful for improving read performance, enabling offline access, and reducing latency by allowing reads and some writes to be performed against the local replica.
+
+## Overview
+
+Here is the configuration overview of LibSQL Class Extension
+
+### In-Memory Connection
+
+To create in-memory connection in LibSQL is very simple and stright-froward:
+```php
+$db = new LibSQL(":memory:");
+```
+As you see before at the [Introduction](/dark-extensions/introduction)
+
+### Local Connection
+
+Establishing a connection to a local database is straightforward with LibSQL. You have 3 options:
+
+   1. **Standard DSN Connection:** If you're using a DSN string, use the following format:
+      ```php
+      $db = new LibSQL("libsql:dbname=database.db", LibSQL::OPEN_READWRITE | LibSQL::OPEN_CREATE, "");
+      ```
+        - This option utilizes a Data Source Name (DSN) string to specify the database location. 
+        - The DSN format is `libsql:dbname=database.db`.
+        - Additional parameters include **connection flags** and an optional **encryption key**.
+      
+   2. **Standard SQLite Connection:** For direct SQLite connections, simply provide the database file name:
+      ```php
+      $db = new LibSQL("database.db", LibSQL::OPEN_READWRITE | LibSQL::OPEN_CREATE, "");
+      ```
+        - In this setup, the database filename alone is provided, without a DSN.
+        - The database file name is directly specified, e.g., `"database.db"`.
+        - Similar to the DSN connection, it also allows for setting **connection flags** and an optional **encryption key**.
+      
+   3. **Standard LibSQL Connection:** Alternatively, you can specify the file protocol explicitly:
+      ```php
+      $db = new LibSQL("file:database.db", LibSQL::OPEN_READWRITE | LibSQL::OPEN_CREATE, "");
+      ```
+        - This option resembles the DSN connection but uses the file protocol in the DSN string.
+        - The DSN string format is `"file:database.db"`.
+        - **Connection flags** and an **encryption key** can also be specified.
+
+### Remote Connection
+
+To create remote connection you need to prepare your Turso/LibSQL Database `DATABASE_URL` and `DATABASE_AUTH_TOKEN`.
+
+If you already have Turso/LibSQL Database account, do following this commands:
+
+Get the database URL:
+```shell
+turso db show --url <database-name>
+```
+
+Get the database authentication token:
+```shell
+turso db tokens create <database-name>
+```
+
+Assign credentials to the environment variables inside `.env` or somewhere else.
+```env
+DATABASE_URL=
+DATABASE_AUTH_TOKEN=
+```
+
+If you doesn't have Turso/LibSQL Database Account, [create one here](https://docs.turso.tech/quickstart) it's free for individual developers just getting started!
+
+- 500 Databases
+- 9GB of total storage
+- 1 billion row reads
+- Unlimited Embedded Replicas
+
+See for other plan [Turso Database Pricing](https://turso.tech/pricing).
+
+Connecting to a remote database is equally effortless. Choose between 2 options:
+
+   1. **Standard DSN Connection with `libsql://`:**
+      ```php
+      $db = new LibSQL("libsql:dbname=libsql://database-org.turso.io;authToken=random-token");
+      ```
+      
+   2. **Standard DSN Connection with `https://`:**
+      ```php
+      $db = new LibSQL("libsql:dbname=https://database-org.turso.io;authToken=random-token");
+      ```
+
+For remote connections, this option utilizes the `libsql://` or `https://` protocol in the DSN string. The format is:
+```php
+libsql:dbname=libsql://database-org.turso.io;authToken=random-token
+```
+It provides a straightforward approach to connect to remote databases.
+
+Here the usage implementation:
+```php
+$db_name = getenv('DATABASE_URL');
+$db_auth_token = getenv('DATABASE_AUTH_TOKEN');
+$db = new LibSQL("libsql:dbname={$db_name};authToken={$db_auth_token}");
+```
+
+### Remote Replica Connection
+
+To set up a replica connection for distributed systems, the configuration **need to formatted as array** follow these steps:
+
+**0. Remote Turso/LibSQL Database**
+
+If you already have Turso/LibSQL Database account, do following this commands:
+
+Get the database URL:
+```shell
+turso db show --url <database-name>
+```
+
+Get the database authentication token:
+```shell
+turso db tokens create <database-name>
+```
+
+If you doesn't have Turso/LibSQL Database Account, [create one here](https://docs.turso.tech/quickstart) it's free for individual developers just getting started!
+
+- 500 Databases
+- 9GB of total storage
+- 1 billion row reads
+- Unlimited Embedded Replicas
+
+See for other plan [Turso Database Pricing](https://turso.tech/pricing).
+
+**1. Defined environment variables**
+
+```env
+DATABASE_FILE=<relative-path-filename>
+DATABASE_URL=<turso-libsql-database-url> # generate from Get the database URL command
+DATABASE_AUTH_TOKEN=<turso-libsql-auth-token> # generate from Get the database authentication token command
+DATABASE_SYNC_INTERVAL=5
+DATABASE_READ_YOUR_WRITES=true
+DATABASE_ENCRYPTION_KEY=
+```
+
+**2. Define the configuration array with the required parameters**
+
+This configuration is designed for synchronizing and replicating data in distributed environments. It requires an array configuration with the following key-value pairs:
+
+```php
+$config = [
+   "url" => "file:database.db",
+   "authToken" => "secrettoken",
+   "syncUrl" => "libsql://database-org.turso.io",
+   "syncInterval" => 5,
+   "read_your_writes" => true,
+   "encryptionKey" => "",
+];
+```
+
+#### Config Details
+
+<ResponseField name="url" type="string" required>
+  Specifies the local database path filename using relative path `/home/turso/app/database.db` remember the back-slash at the begining.
+</ResponseField>
+
+<ResponseField name="authToken" type="string" required>
+  Authentication token for secure access. Generate from Get the database authentication token command
+</ResponseField>
+
+<ResponseField name="syncUrl" type="string" required>
+  URL for synchronization purposes. generate from Get the database URL command
+</ResponseField>
+
+<ResponseField name="syncInterval" type="integer">
+  Integer value representing synchronization interval in seconds (optional, default: `5`).
+</ResponseField>
+
+<ResponseField name="read_your_writes" type="boolean">
+  Boolean value indicating whether to read your writes (optional, default: `true`).
+</ResponseField>
+
+<ResponseField name="encryptionKey" type="string">
+  String value for encryption purposes (optional, default: empty).
+</ResponseField>

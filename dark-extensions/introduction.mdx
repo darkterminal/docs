@@ -1,0 +1,87 @@
+---
+title: 'Introduction'
+description: 'The **#1** Native LibSQL Driver for PHP - Build by Handsome Person from 🇮🇩'
+---
+
+![LibSQL PHP Driver/Extension/Whatever](https://raw.githubusercontent.com/darkterminal/libsql-extension/main/art/elpha-cover.png)
+
+LibSQL PHP Driver/Extension/Whatever designed to seamlessly handle **local**, **remote**, and **remote replica/embedded replica** connections, offering versatility and efficiency for your application's data management needs. With an intuitive interface and flexible configuration options, **[LibSQL](https://github.com/tursodatabase/libsql)** empowers developers to effortlessly integrate database operations into your PHP projects.
+
+<Card title="LibSQL Extension" icon="github" href="https://github.com/darkterminal/libsql-extension">
+  LibSQL Extension for PHP GitHub Repository
+</Card>
+
+---
+
+[libSQL](https://github.com/tursodatabase/libsql) is an open source, open contribution fork of SQLite, created and maintained by [Turso](https://turso.tech). We aim to evolve it to suit many more use cases than SQLite was originally designed for, and plan to use third-party OSS code wherever it makes sense.
+
+[libSQL](https://github.com/tursodatabase/libsql) is licensed under an [Open Source License](https://github.com/tursodatabase/libsql/blob/main/LICENSE.md), and we adhere to a clear [Code of Conduct](https://github.com/tursodatabase/libsql/blob/main/CODE_OF_CONDUCT.md).
+
+---
+
+<Info>This extension build using [Rust Programming Language](https://www.rust-lang.org) and using [ext-php-rs](https://github.com/davidcole1340/ext-php-rs) framework to create new PHP Extension.</Info>
+
+## Features
+
+- Embedded replicas that allow you to have replicated database inside your app.
+- [libSQL server](https://github.com/tursodatabase/libsql/blob/main/libsql-server) for remote SQLite access, similar to PostgreSQL or MySQL
+- Supports Rust, JavaScript, Python, Go, PHP, and [more](https://github.com/tursodatabase/libsql).
+
+## Download
+
+Download the latest build extension/driver binary you can see at [Release](https://github.com/darkterminal/libsql-extension/releases) page. It's available for:
+- Linux
+- Mac/Darwin
+- Windows (still struggle, but you need to try use WSL)
+
+## Installation
+
+- 📦 Extract the archive
+- 🗃 Locate somewhere in your machine
+- 💽 Copy a relative path that address that extension/driver
+- 📂 Open `php.ini` search `;extension` if you using nano (ctrl+w) then searching for it
+- 📝 add in the next-line `extension=liblibsql_php.so` (in Linux) without `;` at the begining
+
+Check on your console/terminal
+
+```shell
+$ php --m | grep libsql
+liblibsql_php
+```
+
+Now, you can use `LibSQL` class in your PHP code!
+
+## Quickstart
+
+Remember, this is not a library or ORM, this is the native extension for LibSQL.
+
+```php
+<?php
+
+// Instanciate
+$db = new LibSQL(":memory:");
+
+// Create table
+$sql = "CREATE TABLE IF NOT EXISTS users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT, 
+  age INTEGER
+)";
+$db->execute($sql);
+
+// Insert data
+$db->execute("INSERT INTO users (name, age) VALUES ('Diana Hooggan', 24)");
+
+// Read data
+$results = $db->query("SELECT * FROM users");
+
+// Display data
+foreach ($results['rows'] as $row) {
+    echo "ID: " . $row['id'] . ", Name: " . $row['name'] . ", Age: " . $row['age'] . "\n";
+}
+
+// Close database
+$db->close();
+```
+
+That's it! It's feel like SQLite but it will more powerful 🚀
