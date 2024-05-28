@@ -1,0 +1,29 @@
+---
+title: 'Requirement'
+description: 'Before using this package, you need to install and configure LibSQL Native Extension for PHP.'
+'og:image': 'https://github.com/darkterminal/libsql-driver-laravel/raw/main/art/libsql-driver-laravel.png'
+---
+
+<Card title="LibSQL Extension for PHP" icon="link" href="https://github.com/darkterminal/libsql-extension/releases">
+  The #1 Native LibSQL Extension for PHP
+</Card>
+
+Download the latest build extension/driver binary you can see at link above. It's available for:
+- Linux
+- Mac/Darwin
+- Windows (still struggle, but you need to try use WSL)
+
+## Extension Installation
+
+- 📦 Extract the archive
+- 🗃 Locate somewhere in your machine
+- 💽 Copy a relative path that address that extension/driver
+- 📂 Open `php.ini` search `;extension` if you using nano (ctrl+w) then searching for it
+- 📝 add in the next-line `extension=liblibsql_php.so` (in Linux) without `;` at the begining
+
+Check on your console/terminal
+
+```shell
+$ php --m | grep libsql
+liblibsql_php
+```

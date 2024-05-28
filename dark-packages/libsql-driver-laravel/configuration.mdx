@@ -1,0 +1,64 @@
+---
+title: 'Configuration'
+description: 'Configure the database connection'
+'og:image': 'https://github.com/darkterminal/libsql-driver-laravel/raw/main/art/libsql-driver-laravel.png'
+---
+
+LibSQL has 3 types of connections to interact with the database: _Local Connection_, _Remote Connection_, and _Remote Replica Connection (Embedded Replica)_
+
+## Local Connection
+
+To be able to use LibSQL locally as if you were using SQLite, simply change the following `.env`:
+```env
+DB_CONNECTION=libsql
+DB_DATABASE=database.sqlite
+```
+
+Ignore other LibSQL `.env` variables.
+
+## Remote Connection
+
+To use LibSQL Remote Connection only, you can define the following `.env` variables:
+```env
+DB_CONNECTION=libsql
+DB_AUTH_TOKEN=<your-database-auth-token-from-turso>
+DB_SYNC_URL=<your-database-url-from-turso>
+DB_REMOTE_ONLY=true
+```
+
+## Remote Replica Connection (Embedded Replica)
+
+To configure remote replica connection (embedded replica), you can simply use the following `.env`:
+```env
+DB_CONNECTION=libsql
+DB_DATABASE=database.sqlite
+DB_AUTH_TOKEN=<your-database-auth-token-from-turso>
+DB_SYNC_URL=<your-database-url-from-turso>
+DB_SYNC_INTERVAL=5
+DB_READ_YOUR_WRITES=true
+DB_ENCRYPTION_KEY=
+DB_REMOTE_ONLY=false
+```
+
+That's it! How easy to make different connection using LibSQL Driver in Laravel, right?!
+
+## Database Configuration
+
+Add this configuration at `config/database.php` inside the `connections` array:
+
+```php
+'libsql' => [
+    'driver' => 'libsql',
+    'url' => 'file:' . env('DB_DATABASE', database_path('database.sqlite')),
+    'authToken' => env('DB_AUTH_TOKEN', ''),
+    'syncUrl' => env('DB_SYNC_URL', ''),
+    'syncInterval' => env('DB_SYNC_INTERVAL', 5),
+    'read_your_writes' => env('DB_READ_YOUR_WRITES', true),
+    'encryptionKey' => env('DB_ENCRYPTION_KEY', ''),
+    'remoteOnly' => env('DB_REMOTE_ONLY', false),
+    'database' => null,
+    'prefix' => '',
+],
+```
+
+<Note>Copy and Paste and do not change it! Or try to change it and will broke your app or give you malfunction.</Note>

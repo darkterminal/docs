@@ -1,0 +1,71 @@
+---
+title: 'Usage'
+description: 'Use LibSQL Database in Laravel Application'
+'og:image': 'https://github.com/darkterminal/libsql-driver-laravel/raw/main/art/libsql-driver-laravel.png'
+---
+
+For database operation usage, everything have same interface like usual when you using `Illuminate\Support\Facades\DB` in your database model. But remember, this is LibSQL they have `sync()` method that can be used when you connect with Remote Replica Connection (Embedded Replica).
+
+```php
+use Illuminate\Support\Facades\DB;
+
+// Create
+DB::connection('libsql')->table('users')->create([
+    'name' => 'Budi Dalton',
+    'email' => 'budi.dalton@duck.com'
+]);
+
+// Read
+DB::connection('libsql')->table('users')->get();
+
+DB::connection('libsql')->table('users')
+    ->where('id', 2)
+    ->first();
+
+DB::connection('libsql')->table('users')
+    ->orderBy('id', 'DESC')
+    ->limit(2)
+    ->get();
+
+// Update
+DB::connection('libsql')->table('users')
+    ->where('id', 2)
+    ->update(['name' => 'Doni Mandala']);
+
+// Delete
+DB::connection('libsql')->table('users')
+    ->where('id', 2)
+    ->delete();
+
+// Transaction
+try {
+    DB::beginTransaction();
+
+    $updated = DB::connection('libsql')->table('users')
+        ->where('id', 9)
+        ->update(['name' => 'Doni Kumala']);
+
+    if ($updated) {
+        echo "It's updated";
+        DB::commit();
+    } else {
+        echo "Not updated";
+        DB::rollBack();
+    }
+
+    $data = DB::connection('libsql')->table('users')
+        ->orderBy('id', 'DESC')
+        ->limit(2)
+        ->get();
+
+    dump($data);
+} catch (\Exception $e) {
+    DB::rollBack();
+    echo "An error occurred: " . $e->getMessage();
+}
+
+// Sync
+DB::connection('libsql')->sync();
+```
+
+That's it! really easy...

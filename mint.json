@@ -104,6 +104,17 @@
     {
       "group": "Packages Documentation",
       "pages": ["dark-packages/introduction"]
+    },
+    {
+      "group": "LibSQL Driver Laravel",
+      "pages": [
+        "dark-packages/libsql-driver-laravel/readme",
+        "dark-packages/libsql-driver-laravel/requirement",
+        "dark-packages/libsql-driver-laravel/installation",
+        "dark-packages/libsql-driver-laravel/environment-variables",
+        "dark-packages/libsql-driver-laravel/configuration",
+        "dark-packages/libsql-driver-laravel/usage"
+      ]
     }
   ],
   "footerSocials": {
