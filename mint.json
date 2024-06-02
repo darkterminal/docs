@@ -115,6 +115,16 @@
         "dark-packages/libsql-driver-laravel/configuration",
         "dark-packages/libsql-driver-laravel/usage"
       ]
+    },
+    {
+      "group": "LibSQL Doctrine DBAL",
+      "pages": [
+        "dark-packages/libsql-doctrine-dbal/readme",
+        "dark-packages/libsql-doctrine-dbal/requirement",
+        "dark-packages/libsql-doctrine-dbal/installation",
+        "dark-packages/libsql-doctrine-dbal/configuration",
+        "dark-packages/libsql-doctrine-dbal/usage"
+      ]
     }
   ],
   "footerSocials": {
