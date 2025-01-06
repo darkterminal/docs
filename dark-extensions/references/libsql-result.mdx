@@ -1,0 +1,137 @@
+---
+title: 'LibSQL Result'
+description: 'On this page, you will find more information about the libSQL Result and available functions.'
+---
+
+The `LibSQLResult` class represents the result set of a LibSQL query. It provides methods for retrieving query results and metadata about the result set.
+
+---
+
+## **Methods**
+
+### `fetchArray`
+Fetches the result set as an array or an iterator.
+
+#### **Parameters**
+  - `LibSQL::LIBSQL_BOTH` *(optional)*: The fetching mode. Defaults to `LibSQL::LIBSQL_BOTH` (both associative and numerical arrays).
+    - `LibSQL::LIBSQL_ASSOC`: Return an associative array.
+    - `LibSQL::LIBSQL_NUM`: Return a numerical array.
+    - `LibSQL::LIBSQL_BOTH`: Return both associative and numerical arrays.
+    - `LibSQL::LIBSQL_ALL`: Return all results.
+    - `LibSQL::LIBSQL_LAZY`: Return a generator for lazy-loading results.
+
+#### **Returns**  
+- *`array|LibSQLIterator`* - The fetched result set
+
+#### **Example**
+```php
+$result = $db->query("SELECT * FROM users");
+foreach ($result->fetchArray() as $row) {
+    echo "ID: " . $row['id'] . ", Name: " . $row['name'] . "\n";
+}
+```
+
+<Note>
+Read more detail about [LibSQLIterator](/dark-extensions/references/libsql-iterator) Class
+</Note>
+
+---
+
+### `finalize`
+Finalizes the result set and frees the associated resources.
+
+#### **Returns**  
+- (void)
+
+#### **Example**
+
+```php
+$result = $db->query("SELECT * FROM users");
+$result->finalize();
+```
+
+---
+
+### `reset`
+Resets the result set for re-execution. This can be used to iterate over the same results multiple times.
+
+#### **Returns**  
+- `void`
+
+#### **Example**
+```php
+$result = $db->query("SELECT * FROM users");
+$result->reset();
+```
+
+---
+
+### `columnName`
+Retrieves the name of a column by its index.
+
+#### **Parameters**
+- `int $column`: The index of the column (zero-based).
+
+#### **Returns**  
+A `string` containing the name of the specified column.
+
+#### **Example**
+```php
+$columnName = $result->columnName(0);
+echo "First column name: " . $columnName;
+```
+
+---
+
+### `columnType`
+Retrieves the type of a column by its index.
+
+#### **Parameters**
+- `int $column`: The index of the column (zero-based).
+
+#### **Returns**  
+A `string` containing the data type of the specified column.
+
+#### **Example**
+```php
+$columnType = $result->columnType(0);
+echo "First column type: " . $columnType;
+```
+
+---
+
+### `numColumns`
+Retrieves the number of columns in the result set.
+
+#### **Returns**  
+An `int` representing the total number of columns in the result set.
+
+#### **Example**
+```php
+$numColumns = $result->numColumns();
+echo "Number of columns: " . $numColumns;
+```
+
+---
+
+### Usage Example
+
+```php
+$db = new LibSQL("libsql:dbname=database.db");
+
+// Execute a query
+$result = $db->query("SELECT id, name, age FROM users");
+
+// Fetch and iterate through results
+foreach ($result->fetchArray() as $row) {
+    echo "ID: " . $row['id'] . ", Name: " . $row['name'] . ", Age: " . $row['age'] . "\n";
+}
+
+// Get metadata
+echo "Number of columns: " . $result->numColumns() . "\n";
+echo "First column name: " . $result->columnName(0) . "\n";
+echo "First column type: " . $result->columnType(0) . "\n";
+
+// Finalize the result set
+$result->finalize();
+```

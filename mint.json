@@ -1,29 +1,45 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "TheDarkDocs",
+  "name": "DARK STATION",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/logo-dark.png",
+    "light": "/logo/logo-light.png"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#ff0000",
-    "light": "#ff0000",
-    "dark": "#ff0000",
+    "primary": "#0c0a0f",
+    "light": "#07ddc8",
+    "dark": "#0c0a0f",
     "anchors": {
-      "from": "#ff0000",
-      "to": "#ff0000"
+      "from": "#0c0a0f",
+      "via": "#cecace",
+      "to": "#0c0a0f"
     }
+  },
+  "font":{
+    "headings": {
+      "family": "Philosopher"
+    },
+    "body": {
+      "family": "Philosopher"
+    }
+  },
+  "theme": "prism",
+  "background": {
+    "style": "gradient"
   },
   "topbarLinks": [
     {
-      "name": "💖 Sponsoring",
+      "name": "💖 Donate",
       "url": "https://github.com/sponsors/darkterminal"
     }
   ],
   "topbarCtaButton": {
     "name": "GitHub Profile",
     "url": "https://github.com/darkterminal"
+  },
+  "primaryTab": {
+    "name": "Terrace"
   },
   "tabs": [
     {
@@ -55,11 +71,16 @@
       "name": "Discussions",
       "icon": "comments",
       "url": "https://github.com/darkterminal/darkterminal/discussions"
+    },
+    {
+      "name": "X Social",
+      "icon": "x",
+      "url": "https://x.com/panggilmeiam"
     }
   ],
   "navigation": [
     {
-      "group": "TheDarkDocs",
+      "group": "Getting Started",
       "pages": ["introduction", "what-the-punk", "oh-my-punk"]
     },
     {
@@ -81,24 +102,28 @@
         "dark-extensions/remote-connection",
         "dark-extensions/remote-replica-connection",
         {
-          "group": "LibSQL Class",
+          "group": "References",
           "pages": [
-            "dark-extensions/libsql-class/introduction",
-            "dark-extensions/libsql-class/constructor",
-            "dark-extensions/libsql-class/version",
-            "dark-extensions/libsql-class/changes",
-            "dark-extensions/libsql-class/isAutocommit",
-            "dark-extensions/libsql-class/execute",
-            "dark-extensions/libsql-class/executeBatch",
-            "dark-extensions/libsql-class/query",
-            "dark-extensions/libsql-class/transaction",
-            "dark-extensions/libsql-class/prepare",
-            "dark-extensions/libsql-class/close",
-            "dark-extensions/libsql-class/sync"
+            "dark-extensions/references/introduction",
+            "dark-extensions/references/libsql",
+            "dark-extensions/references/libsql-statement",
+            "dark-extensions/references/libsql-transaction",
+            "dark-extensions/references/libsql-result",
+            "dark-extensions/references/libsql-iterator"
           ]
-        },
-        "dark-extensions/libsql-statement",
-        "dark-extensions/libsql-transaction"
+        }
+      ]
+    },
+    {
+      "group": "Tools",
+      "pages": [
+        {
+          "group": "Installer",
+          "pages": [
+            "dark-extensions/tools/installer/introduction",
+            "dark-extensions/tools/installer/reference"
+          ]
+        }
       ]
     },
     {
@@ -130,10 +155,5 @@
   "footerSocials": {
     "x": "https://x.com/panggilmeiam",
     "github": "https://github.com/darkterminal"
-  },
-  "feedback": {
-    "suggestEdit": true,
-    "thumbsRating": true,
-    "raiseIssue": true
   }
 }

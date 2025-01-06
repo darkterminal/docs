@@ -1,0 +1,147 @@
+---
+title: 'LibSQL Statement'
+description: 'On this page, you will find more information about the libSQL Statement and available functions.'
+---
+
+The `LibSQLStatement` class is responsible for managing SQL statement preparation, execution, and result retrieval. It provides methods to bind parameters, execute statements, and retrieve data from the database.
+
+## Methods
+
+---
+
+### **`bindNamed`**
+
+Binds a value to a named parameter in the prepared statement.
+
+#### **Parameters**
+- **`array<string, mixed> $parameters`**: The parameters to bind. 
+
+#### **Returns**
+- *(void)*
+
+#### **Example**
+```php
+$stmt = $db->prepare("DELETE FROM users WHERE age = :age");
+$stmt->bindNamed([':age' => 22]);
+$stmt->execute();
+```
+---
+
+### **`bindPositional`**  
+
+Binds a value to a positional parameter in the prepared statement. 
+
+#### **Parameters**  
+- **`array<mixed> $parameters`**: The parameter index (starting at 1) or name to bind to.
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT * FROM users WHERE age = ?1");
+$stmt->bindPositional([21]);
+$stmt->query()->fetchArray(LibSQL::LIBSQL_ASSOC)
+```
+---
+
+### **`query`**  
+
+Executes the prepared SQL statement and retrieves the result set.  
+
+#### **Parameters**  
+- **`array|null $parameters`** *(optional)*: Parameters to bind to the statement before execution.  
+
+#### **Returns**  
+- *(LibSQLResult)*: The result set of the query.  
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
+$result = $stmt->query([1])->fetchArray(LibSQL::LIBSQL_ALL);
+foreach ($result['rows'] as $row) {
+    echo $row['name'];
+}
+```
+
+---
+
+### **`execute`**  
+
+Executes the prepared statement with given parameters.
+
+#### **Parameters**  
+- **`array|null $parameters`** *(optional)*: Parameters to bind to the statement before execution.  
+
+#### **Returns**  
+- *(int)*: The number of rows affected by the statement.  
+
+#### **Example**  
+```php
+$stmt = $db->prepare("DELETE FROM users WHERE id = ?");
+$rowsAffected = $stmt->execute([25]);
+echo "Rows updated: $rowsAffected";
+```
+
+---
+
+### **`reset`**  
+
+Resets the prepared SQL statement so it can be executed again.  
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$stmt->reset();
+```
+
+---
+
+### **`parameterCount`**  
+
+Gets the number of parameters in the prepared statement.
+
+#### **Returns**  
+- *(int)*: The number of total parameters in the prepared statement.
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT * FROM users WHERE age = ?1");
+echo $stmt->parameterCount() . PHP_EOL;
+```
+
+---
+
+### **`parameterName`**  
+
+Gets the name of a parameter by index (1-based index).
+
+#### **Parameters**  
+- **`int $idx`** : The index of the parameter.
+
+#### **Returns**  
+- *(string)*: The name of the parameter.
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT * FROM users WHERE age = ?1");
+echo $stmt->parameterName(1) . PHP_EOL;
+```
+
+---
+
+### **`columns`**  
+
+Gets the column names of the result set.
+
+#### **Returns**  
+- *(array)*: The prepared column names and details.
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT name, age FROM users WHERE age = ?1");
+$columns = $stmt->columns();
+var_dump($columns);
+```

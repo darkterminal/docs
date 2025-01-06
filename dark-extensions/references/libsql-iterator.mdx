@@ -1,0 +1,115 @@
+---
+title: 'LibSQL Iterator'
+description: 'On this page, you will find more information about the libSQL Iterator and available functions.'
+---
+
+The `LibSQLIterator` class provides an interface for iterating over query results in a `LibSQLResult` object. It implements the PHP `Iterator` interface, allowing it to be used in `foreach` loops for sequential access to query rows.
+
+---
+
+## **Methods**
+
+### `current`
+Gets the current row in the result set.
+
+#### **Parameters**  
+None.
+
+#### **Returns**  
+- *`array`* - The current row, as an associative or numerical array, depending on the fetch mode.
+
+#### **Example**
+```php
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+$currentRow = $iterator->current();
+echo "Current row: " . json_encode($currentRow) . "\n";
+```
+
+---
+
+### `key`
+Gets the key of the current row.
+
+#### **Parameters**  
+None.
+
+#### **Returns**  
+- *`int`* - The zero-based index of the current row in the result set.
+
+#### **Example**
+```php
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+echo "Current key: " . $iterator->key() . "\n";
+```
+
+---
+
+### `next`
+Moves the internal pointer to the next row in the result set.
+
+#### **Parameters**  
+None.
+
+#### **Returns**  
+- *`void`*
+
+#### **Example**
+```php
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+$iterator->next();
+echo "Moved to the next row.\n";
+```
+
+---
+
+### `rewind`
+Resets the internal pointer to the first row in the result set.
+
+#### **Parameters**  
+None.
+
+#### **Returns**  
+- *`void`*
+
+#### **Example**
+```php
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+$iterator->rewind();
+echo "Rewound to the first row.\n";
+```
+
+---
+
+### `valid`
+Checks if the current pointer position is valid (i.e., if there is a row at the current position).
+
+#### **Parameters**  
+None.
+
+#### **Returns**  
+- *`bool`* - `true` if the pointer is valid; `false` otherwise.
+
+#### **Example**
+```php
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+if ($iterator->valid()) {
+    echo "Pointer is valid.\n";
+} else {
+    echo "Pointer is not valid.\n";
+}
+```
+
+---
+
+### Usage Example
+
+```php
+$db = new LibSQL("libsql:dbname=database.db");
+$result = $db->query("SELECT id, name FROM users");
+
+// Using LibSQLIterator with lazy loading
+$iterator = $result->fetchArray(LibSQL::LIBSQL_LAZY);
+foreach ($iterator as $key => $row) {
+    echo "Row $key: ID = " . $row['id'] . ", Name = " . $row['name'] . "\n";
+}
+```

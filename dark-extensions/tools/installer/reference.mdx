@@ -1,0 +1,129 @@
+---
+title: Reference
+description: 'Turso PHP Installer manual references'
+---
+
+This page will provide a detailed explanation of how to use `turso-php-installer` and explore the additional features it offers to support development in both local and production environments.
+
+```shell $ turso-php-installer
+  Turso-php-installer  x.x.x
+
+  USAGE:  <command> [options] [arguments]
+
+  install      Install Turso libSQL Extension for PHP
+  uninstall    Uninstall Turso libSQL Extension for PHP
+  update       Update Turso libSQL Extension for PHP
+  version      Display Turso PHP Installer version
+
+  token:create Create libSQL Server Database token for Local Development
+  token:show   Show libSQL Server Database token for Local Development
+```
+
+## Install
+
+Install Turso libSQL Extension for PHP.
+
+```shell
+Description:
+  Install Turso libSQL Extension for PHP
+
+Usage:
+  install [options]
+
+Options:
+  -y, --yes                                Skip interactive installation process
+      --php-version[=PHP-VERSION]          Define your chosen PHP Version: 8.0, 8.1, 8.2, 8.3 default: Your Current PHP Version
+      --php-ini-file[=PHP-INI-FILE]        Define your PHP INI file location: eg: /etc/php/<version>/cli/php.ini default: /etc/php/<version>/cli/php.ini
+      --ext-destination[=EXT-DESTINATION]  Define your PHP Extension Destination: eg: /your/custom/extensions/path default: $HOME/.turso-php-installer or %USERPROFILE%\\.turso-php-installer
+```
+
+### Interactive Mode
+
+**Command**
+
+```shell
+turso-php-installer install
+```
+
+**Output**
+
+<Frame>
+    <img src="/images/interactive-mode-installation.gif" />
+</Frame>
+
+### Non-interactive Mode
+
+**Command**
+
+```shell
+turso-php-installer install -y --php-version=8.3 --ext-destination=$EXT_DESTINATION
+```
+
+**Output**
+
+<Frame>
+    <img src="/images/non-interactive-mode-installation.gif" />
+</Frame>
+
+<Note>Make sure you have root access when using Non-intractive Mode</Note>
+
+## Update
+
+Update Turso libSQL Extension for PHP.
+
+**Command**
+
+```shell
+turso-php-installer update
+```
+
+**Output**
+
+<Frame>
+    <img src="/images/extension-update.gif" />
+</Frame>
+
+## Uninstall
+
+Uninstall Turso libSQL Extension for PHP.
+
+**Command**
+
+```shell
+turso-php-installer uninstall
+```
+
+**Output**
+
+<Frame>
+    <img src="/images/extension-uninstall.gif" />
+</Frame>
+
+## Version
+
+Display Turso PHP Installer version with Current LibSQL Core and LibSQL PHP Extension.
+
+**Command**
+
+```shell
+turso-php-installer version
+```
+
+**Output**
+
+```shell
+Turso libSQL Installer (version: 2.0.3)
+LibSQL Core Version : 3.45.1-3045001 - LibSQL PHP Extension Version: 1.4.2
+```
+
+---
+
+This command will (below 👇) be particularly useful when using the **libSQL Server** on your local computer during the development process. Additional features may be developed in the future to make it easier for developers to use **libSQL Database** and **libSQL Server** without any concerns.
+
+---
+
+## Token
+
+This Token command will make your life easier as it generates a Database Token for authentication purposes, connecting to a remote database (locally for development purposes), and allows you to easily view previously generated tokens<sup>1</sup>.
+
+> 1. The previously generated token will be replaced when you create a new one. I'll work on developing this command to store a history of tokens associated with databases, allowing you to name them for bookmarking later.

@@ -1,13 +1,16 @@
 ---
 title: 'Introduction'
-description: 'The **#1** Native LibSQL Driver for PHP - Build by Handsome Person from 🇮🇩'
+description: 'The **#1** Native LibSQL Extension for PHP - Build by Handsome Person from 🇮🇩'
 ---
 
-![LibSQL PHP Driver/Extension/Whatever](https://raw.githubusercontent.com/darkterminal/libsql-extension/main/art/elpha-cover.png)
+<Frame>
+  <img className="block dark:hidden" src="/images/libsql-php-extension-light.png" />
+  <img className="hidden dark:block" src="/images/libsql-php-extension-dark.png" />
+</Frame>
 
-LibSQL PHP Driver/Extension/Whatever designed to seamlessly handle **local**, **remote**, and **remote replica/embedded replica** connections, offering versatility and efficiency for your application's data management needs. With an intuitive interface and flexible configuration options, **[LibSQL](https://github.com/tursodatabase/libsql)** empowers developers to effortlessly integrate database operations into your PHP projects.
+LibSQL PHP Extension designed to seamlessly handle **local**, **remote**, and **remote replica/embedded replica** connections, offering versatility and efficiency for your application's data management needs. With an intuitive interface and flexible configuration options, **[LibSQL](https://github.com/tursodatabase/libsql)** empowers developers to effortlessly integrate database operations into your PHP projects.
 
-<Card title="LibSQL Extension" icon="github" href="https://github.com/darkterminal/libsql-extension">
+<Card title="LibSQL Extension" icon="github" horizontal href="https://github.com/tursodatabase/turso-client-php">
   LibSQL Extension for PHP GitHub Repository
 </Card>
 
@@ -29,12 +32,34 @@ LibSQL PHP Driver/Extension/Whatever designed to seamlessly handle **local**, **
 
 ## Download
 
-Download the latest build extension/driver binary you can see at [Release](https://github.com/darkterminal/libsql-extension/releases) page. It's available for:
+Download the latest build extension binary you can see at [Release](https://github.com/tursodatabase/turso-client-php/releases) page. It's available for:
 - Linux
 - Mac/Darwin
-- Windows (still struggle, but you need to try use WSL)
+- Windows
 
-## Installation
+## Install using Composer
+
+You can install the libSQL Extension just like using NVM (Node Version Manager). With the installer, you can:
+
+- Select the PHP version
+- PHP Thread-Safe/Non Thread-Safe build version
+- stable (`tursodatabase/turso-client-php`) or unstable (`pandanotabear/turso-client-php`) 
+
+and more—all using `turso-php-installer`.
+
+```
+# Install the installer
+composer global require darkterminal/turso-php-installer
+
+# install the extension
+turso-php-installer install
+```
+
+<Info>
+Read more details about [turso-php-installer](/dark-extensions/tools/installer/introduction)
+</Info>
+
+## Manual Installation
 
 - 📦 Extract the archive
 - 🗃 Locate somewhere in your machine
@@ -51,7 +76,7 @@ liblibsql_php
 
 Now, you can use `LibSQL` class in your PHP code!
 
-## Quickstart
+## Usage
 
 Remember, this is not a library or ORM, this is the native extension for LibSQL.
 

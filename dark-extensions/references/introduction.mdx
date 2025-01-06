@@ -1,0 +1,25 @@
+---
+title: 'Introduction'
+description: 'On this page, you will find more information about the libSQL PHP classes and available functions.'
+---
+
+
+
+This document introduces PHP stubs for the `libsql_php_extension`, designed to provide PHP developers with tools for interacting with libSQL databases. Key components include:
+
+**Classes and Their Responsibilities**:
+   - **`LibSQLStatement`**: Represents a prepared SQL statement. It includes methods for binding parameters (named or positional), executing statements, retrieving results, and managing statement lifecycle.
+   - **`LibSQLTransaction`**: Manages database transactions. It provides methods for executing queries within a transaction, committing, or rolling back changes.
+   - **`LibSQLResult`**: Handles query results. It allows fetching rows, resetting results, and accessing column metadata (e.g., names, types, counts).
+   - **`LibSQL`**: Represents a database connection. It supports creating local or remote connections, executing queries or batches, managing transactions, and enabling advanced features like syncing and extension loading.
+   - **`LibSQLIterator`**: A custom iterator for traversing data, useful for handling result sets.
+
+**Constants**:
+   - `OPEN_READONLY` - Specifies read-only mode when opening the database connection.
+   - `OPEN_READWRITE` - Specifies read-write mode when opening the database connection.
+   - `OPEN_CREATED` - Specifies create mode when opening the database connection.
+   - `LIBSQL_ASSOC` - Return associative array.
+   - `LIBSQL_NUM` - Return numerical array
+   - `LIBSQL_BOTH` - Return both associative and numerical array
+   - `LIBSQL_ALL` - Return a result sets
+   - `LIBSQL_LAZY` - Return a result Generator

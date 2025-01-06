@@ -1,0 +1,133 @@
+---
+title: 'LibSQL Transaction'
+description: 'On this page, you will find more information about the libSQL Transaction and available functions.'
+---
+
+The `LibSQLTransaction` class represents a database transaction in the LibSQL PHP extension. It allows for executing SQL statements within a transaction context, handling commits, rollbacks, and managing transactional behavior.
+
+## Constructor
+
+The libSQL Transaction will construct when you using `$db->transaction()`.
+
+## Methods
+
+### `changes`
+
+Retrieves the number of rows changed by the last SQL statement.
+
+#### **Returns**  
+- *(int)* : The number of rows changed.  
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+$tx->execute("UPDATE users SET name = 'Glauber Costa' WHERE id = 6");
+echo $tx->changes() . PHP_EOL;
+```
+---
+
+### `isAutocommit`
+
+Checks if the transaction is set to autocommit.
+
+#### **Returns**  
+- *(bool)* : if autocommit is enabled return `true`, otherwise `false`.
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+var_dump($tx->isAutocommit());
+```
+---
+
+### `execute`
+
+Executes an SQL statement within the transaction.
+
+#### **Parameters**  
+- **`string $stmt`**: The SQL statement to execute.
+- **`array $parameters`**: The parameters for the statement (optional).
+
+#### **Returns**  
+- *(int)* : The number of affected rows.
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+$tx->execute("UPDATE users SET name = 'Glauber Costa' WHERE id = 6");
+```
+---
+
+### `query`
+
+Executes a query within the transaction and returns the result set.
+
+#### **Parameters**  
+- **`string $stmt`**: The SQL statement to execute.
+- **`array $parameters`**: The parameters for the statement (optional).
+
+#### **Returns**  
+- *(LibSQLResult)*: The result set of the query.  
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+$tx->query("SELECT name, email FROM users")->fetchArray(LibSQL::LIBSQL_ASSOC);
+```
+---
+
+### `commit`
+
+Commits the transaction.
+
+#### **Returns**  
+- *(void)*
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+$tx->execute("UPDATE users SET name = 'Glauber Costa' WHERE id = 6");
+$tx->commit();
+```
+---
+
+### `rollback`
+
+Rolls back the transaction.
+
+#### **Returns**  
+- *(void)*
+
+#### **Example**  
+```php
+$tx = $db->transaction();
+$tx->execute("UPDATE users SET name = 'Glauber Costa' WHERE id = 6");
+$tx->rollback();
+```
+---
+
+## Usage Example
+
+```php
+<?php
+
+// Create a new LibSQL instance
+$db = new LibSQL("libsql:dbname=database.db");
+
+// Start a new transaction with default behavior
+$transaction = $db->transaction();
+
+$transaction->execute("UPDATE users SET name = 'Glauber Costa' WHERE id = 6");
+
+$another_transaction = true;
+
+if ($another_transaction) {
+    $transaction->commit();
+    echo "Transaction commited!" . PHP_EOL;
+} else {
+    $transaction->rollback();
+    echo "Transaction rollback!" . PHP_EOL;
+}
+
+$db->close();
+```

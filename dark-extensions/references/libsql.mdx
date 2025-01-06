@@ -1,0 +1,292 @@
+---
+title: 'LibSQL Class'
+description: 'On this page, you will find more information about the libSQL PHP classes and available functions.'
+---
+
+The `LibSQL` class provides an interface for connecting to and interacting with a LibSQL database. It supports operations such as preparing and executing SQL statements, managing transactions, and retrieving query results.
+
+---
+
+## **Constants**
+
+- `OPEN_READONLY`: Specifies read-only mode when opening the database connection.  
+- `OPEN_READWRITE`: Specifies read-write mode when opening the database connection.  
+- `OPEN_CREATE`: Specifies create mode when opening the database connection.  
+- `LIBSQL_ASSOC`: Return results as an associative array.  
+- `LIBSQL_NUM`: Return results as a numerical array.  
+- `LIBSQL_BOTH`: Return results as both associative and numerical arrays.  
+- `LIBSQL_ALL`: Return all result sets.  
+- `LIBSQL_LAZY`: Return a result generator.
+
+---
+
+## **Properties**
+
+- **`$mode`**: *(string)*  
+   The mode of the database connection.
+
+---
+
+## **Methods**
+
+### **`__construct`**  
+
+Creates a new instance of the `LibSQL` class to establish a connection to the database.  
+#### **Parameters**  
+- **`string|array $config`**: Configuration for the database connection.  
+  - Examples: Local file path, DSN string, or an array of configuration parameters.  
+- **`int|null $flags`** *(optional)*: Connection flags (default: `6` - read-write and create mode).  
+- **`string|null $encryption_key`** *(optional)*: The encryption key for the database.  
+
+#### **Example**  
+```php
+$db = new LibSQL("database.db", LibSQL::OPEN_READWRITE | LibSQL::OPEN_CREATE);
+```
+
+---
+
+### **`version`** *(static)*  
+
+Retrieves the version of the LibSQL library and PHP extension.  
+
+#### **Returns**  
+- *(string)*: Version information.  
+
+#### **Example**  
+```php
+$version = LibSQL::version();
+echo $version;
+```
+
+---
+
+### **`changes`**  
+
+Gets the number of rows changed by the last executed SQL statement.  
+
+#### **Returns**  
+- *(int)*: The number of rows changed.  
+
+#### **Example**  
+```php
+$changes = $db->changes();
+echo "Rows changed: $changes";
+```
+
+---
+
+### **`isAutocommit`**  
+
+Checks if autocommit mode is enabled for the connection.  
+
+#### **Returns**  
+- *(bool)*: `true` if autocommit is enabled, otherwise `false`.  
+
+#### **Example**  
+```php
+if ($db->isAutocommit()) {
+    echo "Autocommit is enabled.";
+}
+```
+
+---
+
+### **`totalChanges`**  
+
+Gets the total number of rows changed since the database connection was opened.  
+
+#### **Returns**  
+- *(int)*: Total number of rows changed.  
+
+#### **Example**  
+```php
+$total = $db->totalChanges();
+echo "Total rows changed: $total";
+```
+
+---
+
+### **`lastInsertedId`**  
+
+Retrieves the ID of the last inserted row.  
+
+#### **Returns**  
+- *(int)*: The ID of the last inserted row.  
+
+#### **Example**  
+```php
+$lastId = $db->lastInsertedId();
+echo "Last inserted row ID: $lastId";
+```
+
+---
+
+### **`execute`**  
+
+Executes a single SQL statement on the database.  
+
+#### **Parameters**  
+- **`string $stmt`**: The SQL statement to execute.  
+- **`array $parameters`** *(optional)*: Parameters for the SQL statement.  
+
+#### **Returns**  
+- *(int)*: Number of rows affected by the statement.  
+
+#### **Example**  
+```php
+$stmt = "INSERT INTO users (name, age) VALUES (?, ?)";
+$db->execute($stmt, ["John Doe", 30]);
+```
+
+---
+
+### **`executeBatch`**  
+
+Executes a batch of SQL statements.  
+
+#### **Parameters**  
+- **`string $stmt`**: The batch of SQL statements to execute.  
+
+#### **Returns**  
+- *(bool)*: `true` if the batch execution was successful, otherwise `false`.  
+
+#### **Example**  
+```php
+$batch = "
+    INSERT INTO users (name, age) VALUES ('Jane Doe', 25);
+    INSERT INTO users (name, age) VALUES ('Mike', 30);
+";
+$db->executeBatch($batch);
+```
+
+---
+
+### **`query`**  
+
+Executes an SQL query and retrieves the result set.  
+
+#### **Parameters**  
+- **`string $stmt`**: The SQL query to execute.  
+- **`array $parameters`** *(optional)*: Parameters for the query.  
+
+#### **Returns**  
+- *(LibSQLResult)*: The result of the query.  
+
+#### **Example**  
+```php
+$results = $db->query("SELECT * FROM users")->fetchArray(LibSQL::LIBSQL_ALL);
+foreach ($results['rows'] as $row) {
+    echo $row['name'];
+}
+```
+
+<Note>
+Read more detail about [LibSQLResult](/dark-extensions/references/libsql-result) Class
+</Note>
+
+---
+
+### **`transaction`**  
+
+Starts a new database transaction.  
+
+#### **Parameters**  
+- **`string $behavior`** *(optional)*: Transaction behavior (default: `"DEFERRED"`).  
+
+#### **Returns**  
+- *(LibSQLTransaction)*: The transaction object.  
+
+#### **Example**  
+```php
+$transaction = $db->transaction();
+$transaction->execute("UPDATE users SET age = 29 WHERE id = 1");
+$transaction->commit();
+```
+
+<Note>
+Read more detail about [LibSQLTransaction](/dark-extensions/references/libsql-transaction) Class
+</Note>
+
+---
+
+### **`prepare`**  
+
+Prepares an SQL statement for execution.  
+
+#### **Parameters**  
+- **`string $sql`**: The SQL statement to prepare.  
+
+#### **Returns**  
+- *(LibSQLStatement)*: The prepared statement object.  
+
+#### **Example**  
+```php
+$stmt = $db->prepare("SELECT * FROM users WHERE id = ?");
+$result = $stmt->query([1]);
+```
+
+<Note>
+Read more detail about [LibSQLStatement](/dark-extensions/references/libsql-statement) Class
+</Note>
+
+---
+
+### **`close`**  
+
+Closes the database connection.  
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$db->close();
+```
+
+---
+
+### **`sync`**  
+
+Syncs the database to ensure data integrity.  
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$db->sync();
+```
+
+---
+
+### **`enableLoadExtension`**  
+
+Enables or disables the loading of extensions.  
+
+#### **Parameters**  
+- **`bool $onoff`**: `true` to enable extensions, `false` to disable.  
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$db->enableLoadExtension(true);
+```
+
+---
+
+### **`loadExtensions`**  
+
+Loads specified database extensions.  
+
+#### **Parameters**  
+- **`array|string $extension_paths`**: Paths to the extensions to load.  
+
+#### **Returns**  
+- *(void)*  
+
+#### **Example**  
+```php
+$db->loadExtensions(["sqlite_extension1", "sqlite_extension2"]);
+```
