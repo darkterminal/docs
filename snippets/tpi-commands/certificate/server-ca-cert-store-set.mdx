@@ -1,0 +1,28 @@
+### `server:cert-store-set`
+ 
+Sets or overwrites the global certificate store location to be used by the server. By default, the store location is `{installation_dir}/certs`.
+
+**Usage:**  
+```bash
+server:cert-store-set [<path>]
+```
+
+**Arguments:**
+
+- **`<path>`**  
+  The file system path to set as the new global certificate store.  
+  Example: `/custom/path/to/certs`.
+
+**Examples:**
+
+1. Set a custom global certificate store location:  
+   ```bash
+   server:cert-store-set /custom/path/to/certs
+   ```
+
+2. Reset the certificate store location to the default by not specifying a path:  
+   ```bash
+   server:cert-store-set
+   ```
+
+This command is useful for customizing the location of the certificate store to suit specific development or deployment needs. Ensure the specified path is accessible and writable by the server.

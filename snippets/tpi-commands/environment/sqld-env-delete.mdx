@@ -1,0 +1,28 @@
+### `sqld:env-delete`
+ 
+Deletes an `sqld` environment by its name or ID.
+
+**Usage:**  
+```bash
+sqld:env-delete <name-or-id>
+```
+
+**Arguments:**
+
+- **`<name-or-id>`**  
+  The name or ID of the environment you want to delete.  
+  Example: `development`, `staging`, or `677e5e0155167`.
+
+**Examples:**
+
+1. Delete an environment named `development`:  
+   ```bash
+   sqld:env-delete development
+   ```
+
+2. Delete an environment by its ID, for example, `677e5e0155167`:  
+   ```bash
+   sqld:env-delete 677e5e0155167
+   ```
+
+This command is useful for removing environments that are no longer needed. Once deleted, the environment and its associated configurations will be permanently removed.

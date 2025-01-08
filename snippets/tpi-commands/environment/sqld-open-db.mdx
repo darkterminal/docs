@@ -1,0 +1,32 @@
+### `sqld:open-db`
+ 
+Opens a database using the Turso CLI for the specified environment and database in Turso Database Shell.
+
+**Usage:**  
+```bash
+sqld:open-db <env-id-or-name> <db-name>
+```
+
+**Arguments:**
+
+- **`<env-id-or-name>`**  
+  The ID or name of the environment where the database is located.  
+  Example: `development`, `staging`, or `677e5e0155167`.
+
+- **`<db-name>`**  
+  The name of the database to open.  
+  Example: `my_database`.
+
+**Examples:**
+
+1. Open the `my_database` from the `development` environment:  
+   ```bash
+   sqld:open-db development my_database
+   ```
+
+2. Open the `prod_db` from the `staging` environment:  
+   ```bash
+   sqld:open-db staging prod_db
+   ```
+
+This command allows you to open and interact with a specific database in a given environment using the Turso CLI, which is useful for managing and querying your databases directly.

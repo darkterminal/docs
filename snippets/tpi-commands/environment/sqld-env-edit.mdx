@@ -1,0 +1,28 @@
+### `sqld:env-edit`
+ 
+Edits an existing `sqld` environment by its ID or name.
+
+**Usage:**  
+```bash
+sqld:env-edit <env-id-or-name>
+```
+
+**Arguments:**
+
+- **`<env-id-or-name>`**  
+  The ID or name of the environment you want to edit.  
+  Example: `development`, `staging`, or `677e5e0155167`.
+
+**Examples:**
+
+1. Edit an environment named `development`:  
+   ```bash
+   sqld:env-edit development
+   ```
+
+2. Edit an environment by its ID, for example, `677e5e0155167`:  
+   ```bash
+   sqld:env-edit 677e5e0155167
+   ```
+
+This command allows you to modify an existing environment's settings and configurations. It's useful for updating environment details such as database connections, credentials, or any other environment-specific variables.

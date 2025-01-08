@@ -1,0 +1,28 @@
+### `sqld:env-show`
+ 
+Displays detailed information about a specific `sqld` environment based on its name or ID.
+
+**Usage:**  
+```bash
+sqld:env-show <name-or-id>
+```
+
+**Arguments:**
+
+- **`<name-or-id>`**  
+  The name or ID of the environment whose details you want to view.  
+  Example: `development`, `staging`, or an environment ID like `677e5e0155167`.
+
+**Examples:**
+
+1. Show details of an environment named `development`:  
+   ```bash
+   sqld:env-show development
+   ```
+
+2. Show details of an environment by its ID:  
+   ```bash
+   sqld:env-show 677e5e0155167
+   ```
+
+The output includes information such as environment variables, configurations, and other relevant details, making this command useful for reviewing or debugging specific environments.

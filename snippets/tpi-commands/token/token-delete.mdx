@@ -1,0 +1,32 @@
+### `token:delete`
+ 
+Deletes a specific database token or all tokens for local development.
+
+**Usage:**  
+```bash
+token:delete [options] [--] [<db-name>]
+```
+
+**Arguments:**
+
+- **`<db-name>`**  
+  The name of the database whose token you want to delete. If omitted and `--all` is not specified, the command will fail.
+
+**Options:**
+
+- **`--all`**  
+  Deletes all database tokens for all databases. Use with caution, as this action is irreversible.
+
+**Examples:**
+
+1. Delete the token for a specific database named `my_database`:  
+   ```bash
+   token:delete my_database
+   ```
+
+2. Delete all database tokens:  
+   ```bash
+   token:delete --all
+   ``` 
+
+If you intend to delete a specific token, ensure you specify the correct database name to avoid unintentional token deletions.

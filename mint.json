@@ -121,7 +121,13 @@
           "group": "Installer",
           "pages": [
             "dark-extensions/tools/installer/introduction",
-            "dark-extensions/tools/installer/reference"
+            "dark-extensions/tools/installer/reference",
+            {
+              "group": "Platforms",
+              "pages": [
+                "dark-extensions/tools/installer/platforms/laravel-sail"
+              ]
+            }
           ]
         }
       ]

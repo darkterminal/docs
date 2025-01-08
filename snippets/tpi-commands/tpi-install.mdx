@@ -1,0 +1,59 @@
+## Install
+
+Installs the Turso libSQL Extension for PHP, enabling seamless integration of libSQL with PHP applications.
+
+**Usage:**  
+```bash
+install [options]
+```
+
+**Options:**
+
+- **`--unstable`**  
+  Installs the unstable version of the Turso libSQL extension from the development repository.  
+  Example:  
+  ```bash
+  install --unstable
+  ```
+
+- **`--thread-safe`**  
+  Installs the Thread Safe (TS) version of the extension, which is necessary for certain PHP setups.  
+  Example:  
+  ```bash
+  install --thread-safe
+  ```
+
+- **`--php-ini[=PHP-INI]`**  
+  Specifies the path to the `php.ini` file to use for configuring the extension.  
+  Example:  
+  ```bash
+  install --php-ini=/etc/php.ini
+  ```
+
+- **`--php-version[=PHP-VERSION]`**  
+  Specifies the PHP version to use for the installation.  
+  Example:  
+  ```bash
+  install --php-version=8.1
+  ```
+
+- **`--extension-dir[=EXTENSION-DIR]`**  
+  Specifies the directory where the PHP extension should be installed.  
+  Example:  
+  ```bash
+  install --extension-dir=/usr/local/lib/php/extensions
+  ```
+
+**Examples:**
+
+1. Install the Turso libSQL extension with the unstable version and specify a custom `php.ini` file:  
+   ```bash
+   install --unstable --php-ini=/etc/php.ini
+   ```
+
+2. Install the Thread Safe version for PHP 8.1 and specify the extension directory:  
+   ```bash
+   install --thread-safe --php-version=8.1 --extension-dir=/usr/local/lib/php/extensions
+   ```
+
+This command is used to install the Turso libSQL extension for PHP, making it easier to integrate libSQL with PHP-based applications. You can customize the installation with options to select specific versions, configurations, or directories based on your environment.

@@ -1,0 +1,31 @@
+### `token:create`
+ 
+Creates a libSQL Server Database token for local development purposes.
+
+**Usage:**  
+```bash
+token:create [options] [--] <db-name>
+```
+
+**Arguments:**
+
+- **`<db-name>`**  
+  The name of the database for which to generate the token.
+
+**Options:**
+
+- **`--expire[=EXPIRE]`**  
+  The number of days until the token expires. The default value is 7 days.  
+  Example: `--expire=14` will set the token expiration to 14 days.
+
+**Examples:**
+
+1. Create a token for a database named `my_database` with the default 7-day expiration:
+   ```bash
+   token:create my_database
+   ```
+
+2. Create a token for a database named `my_database` with a 14-day expiration:
+   ```bash
+   token:create --expire=14 my_database
+   ```

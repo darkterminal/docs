@@ -3,118 +3,45 @@ title: Reference
 description: 'Turso PHP Installer manual references'
 ---
 
+import TpiOverview from "/snippets/tpi-commands/tpi-overview.mdx"
+import TpiInstall from "/snippets/tpi-commands/tpi-install.mdx"
+import TpiInstallInteractive from "/snippets/tpi-commands/tpi-install-interactive.mdx"
+import TpiInstallNonInteractive from "/snippets/tpi-commands/tpi-install-non-interactive.mdx"
+import TpiUpdate from "/snippets/tpi-commands/tpi-update.mdx"
+import TpiUninstall from "/snippets/tpi-commands/tpi-uninstall.mdx"
+import TpiVersion from "/snippets/tpi-commands/tpi-version.mdx"
+
+import TokenCreate from "/snippets/tpi-commands/token/token-create.mdx"
+import TokenList from "/snippets/tpi-commands/token/token-list.mdx"
+import TokenShow from "/snippets/tpi-commands/token/token-show.mdx"
+import TokenDelete from "/snippets/tpi-commands/token/token-delete.mdx"
+
+import ServerCheck from "/snippets/tpi-commands/certificate/server-check.mdx"
+import ServerCaCreate from "/snippets/tpi-commands/certificate/server-ca-cert-create.mdx"
+import ServerCaPeerCreate from "/snippets/tpi-commands/certificate/server-ca-peer-cert-create.mdx"
+import ServerCaCertList from "/snippets/tpi-commands/certificate/server-ca-cert-list.mdx"
+import ServerCaCertShow from "/snippets/tpi-commands/certificate/server-ca-cert-show.mdx"
+import ServerCaCertDelete from "/snippets/tpi-commands/certificate/server-ca-cert-delete.mdx"
+import ServerCaStoreGet from "/snippets/tpi-commands/certificate/server-ca-cert-store-get.mdx"
+import ServerCaStoreSet from "/snippets/tpi-commands/certificate/server-ca-cert-store-set.mdx"
+
+import SqldEnvNew from "/snippets/tpi-commands/environment/sqld-env-new.mdx"
+import SqldEnvList from "/snippets/tpi-commands/environment/sqld-env-list.mdx"
+import SqldEnvShow from "/snippets/tpi-commands/environment/sqld-env-show.mdx"
+import SqldEnvEdit from "/snippets/tpi-commands/environment/sqld-env-edit.mdx"
+import SqldEnvDelete from "/snippets/tpi-commands/environment/sqld-env-delete.mdx"
+import SqldServerRun from "/snippets/tpi-commands/environment/sqld-server-run.mdx"
+import SqldOpenDb from "/snippets/tpi-commands/environment/sqld-open-db.mdx"
+
 This page will provide a detailed explanation of how to use `turso-php-installer` and explore the additional features it offers to support development in both local and production environments.
 
-```shell $ turso-php-installer
-  Turso-php-installer  x.x.x
-
-  USAGE:  <command> [options] [arguments]
-
-  install      Install Turso libSQL Extension for PHP
-  uninstall    Uninstall Turso libSQL Extension for PHP
-  update       Update Turso libSQL Extension for PHP
-  version      Display Turso PHP Installer version
-
-  token:create Create libSQL Server Database token for Local Development
-  token:show   Show libSQL Server Database token for Local Development
-```
-
-## Install
-
-Install Turso libSQL Extension for PHP.
-
-```shell
-Description:
-  Install Turso libSQL Extension for PHP
-
-Usage:
-  install [options]
-
-Options:
-  -y, --yes                                Skip interactive installation process
-      --php-version[=PHP-VERSION]          Define your chosen PHP Version: 8.0, 8.1, 8.2, 8.3 default: Your Current PHP Version
-      --php-ini-file[=PHP-INI-FILE]        Define your PHP INI file location: eg: /etc/php/<version>/cli/php.ini default: /etc/php/<version>/cli/php.ini
-      --ext-destination[=EXT-DESTINATION]  Define your PHP Extension Destination: eg: /your/custom/extensions/path default: $HOME/.turso-php-installer or %USERPROFILE%\\.turso-php-installer
-```
-
-### Interactive Mode
-
-**Command**
-
-```shell
-turso-php-installer install
-```
-
-**Output**
-
-<Frame>
-    <img src="/images/interactive-mode-installation.gif" />
-</Frame>
-
-### Non-interactive Mode
-
-**Command**
-
-```shell
-turso-php-installer install -y --php-version=8.3 --ext-destination=$EXT_DESTINATION
-```
-
-**Output**
-
-<Frame>
-    <img src="/images/non-interactive-mode-installation.gif" />
-</Frame>
-
-<Note>Make sure you have root access when using Non-intractive Mode</Note>
-
-## Update
-
-Update Turso libSQL Extension for PHP.
-
-**Command**
-
-```shell
-turso-php-installer update
-```
-
-**Output**
-
-<Frame>
-    <img src="/images/extension-update.gif" />
-</Frame>
-
-## Uninstall
-
-Uninstall Turso libSQL Extension for PHP.
-
-**Command**
-
-```shell
-turso-php-installer uninstall
-```
-
-**Output**
-
-<Frame>
-    <img src="/images/extension-uninstall.gif" />
-</Frame>
-
-## Version
-
-Display Turso PHP Installer version with Current LibSQL Core and LibSQL PHP Extension.
-
-**Command**
-
-```shell
-turso-php-installer version
-```
-
-**Output**
-
-```shell
-Turso libSQL Installer (version: 2.0.3)
-LibSQL Core Version : 3.45.1-3045001 - LibSQL PHP Extension Version: 1.4.2
-```
+<TpiOverview />
+<TpiInstall />
+<TpiInstallInteractive />
+<TpiInstallNonInteractive />
+<TpiUpdate />
+<TpiUninstall />
+<TpiVersion />
 
 ---
 
@@ -122,8 +49,36 @@ This command will (below 👇) be particularly useful when using the **libSQL Se
 
 ---
 
-## Token
+## Token Management
 
-This Token command will make your life easier as it generates a Database Token for authentication purposes, connecting to a remote database (locally for development purposes), and allows you to easily view previously generated tokens<sup>1</sup>.
+The following commands are used to manage database tokens for the libSQL Server during local development. These commands allow developers to create, view, list, and delete tokens as needed.
 
-> 1. The previously generated token will be replaced when you create a new one. I'll work on developing this command to store a history of tokens associated with databases, allowing you to name them for bookmarking later.
+<TokenCreate />
+<TokenList />
+<TokenShow />
+<TokenDelete />
+
+## Certificate Management
+
+This set of commands provides a comprehensive toolkit for managing server certificates and ensuring server readiness. It includes functionalities to create, delete, and list Certificate Authority (CA) certificates, view raw certificate details, and generate peer certificates. Users can also manage the global certificate store by retrieving or setting its location, with a default setup tied to the installation directory. Additionally, a dedicated command is available to verify server prerequisites, ensuring that necessary components like Python 3, pip, and cryptography libraries are properly installed. These features streamline certificate management and server preparation tasks.
+
+<ServerCheck />
+<ServerCaCreate />
+<ServerCaPeerCreate />
+<ServerCaCertList />
+<ServerCaCertShow />
+<ServerCaCertDelete />
+<ServerCaStoreGet />
+<ServerCaStoreSet />
+
+## SQLD / libSQL Environment Management
+
+This set of commands is designed to efficiently manage SQLD environments and interact with databases. It enables users to create, edit, delete, and list environments, ensuring streamlined organization and easy access for future use. Detailed information about specific environments can also be viewed as needed. Additionally, users can open databases using the Turso CLI and run the SQLD server based on a selected environment, providing a seamless workflow for database and server management.
+
+<SqldEnvNew />
+<SqldEnvList />
+<SqldEnvShow />
+<SqldEnvEdit />
+<SqldEnvDelete />
+<SqldServerRun />
+<SqldOpenDb />

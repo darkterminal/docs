@@ -1,0 +1,39 @@
+### `server:ca-cert-create`
+ 
+Generates a Certificate Authority (CA) certificate for the server.
+
+**Usage:**  
+```bash
+server:ca-cert-create [options] [--] [<name>]
+```
+
+**Arguments:**
+
+- **`<name>`**  
+  The name of the CA certificate to generate. Defaults to `"ca"` if not specified.  
+  Example: `my-ca-cert`.
+
+**Options:**
+
+- **`--expiry[=EXPIRY]`**  
+  The expiration period of the CA certificate in days. Defaults to 30 days.  
+  Example: `--expiry=90` sets the certificate to expire in 90 days.
+
+**Examples:**
+
+1. Generate a CA certificate with the default name `ca` and a 30-day expiration:  
+   ```bash
+   server:ca-cert-create
+   ```
+
+2. Generate a CA certificate with a custom name `my-ca-cert` and the default 30-day expiration:  
+   ```bash
+   server:ca-cert-create my-ca-cert
+   ```
+
+3. Generate a CA certificate with a custom name and a 90-day expiration:  
+   ```bash
+   server:ca-cert-create --expiry=90 my-ca-cert
+   ```
+
+This command is useful for generating CA certificates for securing server communication during development or testing.

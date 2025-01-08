@@ -1,0 +1,37 @@
+### `sqld:server-run`
+ 
+Runs the `sqld` server based on the specified environment ID or name, and connects it to the specified database. This command also will return a URL to open SQLD Studio in browser with current database credential / running database.
+
+**Usage:**  
+```bash
+sqld:server-run [options] [--] <env-id-or-name> <db-name>
+```
+
+**Arguments:**
+
+- **`<env-id-or-name>`**  
+  The ID or name of the environment in which to run the `sqld` server.  
+  Example: `development`, `staging`, or `677e5e0155167`.
+
+- **`<db-name>`**  
+  The name of the database to connect the server to.  
+  Example: `my_database`.
+
+**Options:**
+
+- **`-d, --daemon`**  
+  Runs the `sqld` server in daemon mode, allowing it to run in the background.
+
+**Examples:**
+
+1. Run the `sqld` server for the `development` environment and connect to the `my_database` database:  
+   ```bash
+   sqld:server-run development my_database
+   ```
+
+2. Run the `sqld` server for the `staging` environment, connect to the `prod_db` database, and run it in daemon mode:  
+   ```bash
+   sqld:server-run -d staging prod_db
+   ```
+
+This command is used to start the `sqld` server in a specified environment and connect it to a database. The `--daemon` option is useful for running the server in the background without blocking the terminal.

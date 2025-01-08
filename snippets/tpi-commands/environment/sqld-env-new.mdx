@@ -1,0 +1,49 @@
+### `sqld:env-new`
+ 
+Creates a new `sqld` environment and saves it for future use. If the environment already exists, it can be overwritten using the `--force` option.
+
+**Usage:**  
+```bash
+sqld:env-new [options] [--] <name>
+```
+
+**Arguments:**
+
+- **`<name>`**  
+  The name of the environment to create. This is required.  
+  Example: `development`, `staging`, or `production`.
+
+**Options:**
+
+- **`--variables[=VARIABLES]`**  
+  Specifies the variables for the environment in either JSON or DSN (Data Source Name) format.  
+  Example in JSON format:  
+  ```bash
+  --variables='{"SQLD_DB_PATH": "/your/database/path", "SQLD_HTTP_LISTEN_ADDR": "127.0.0.1:8080", "SQLD_AUTH_JWT_KEY_FILE": "/path/to/jwt_key.pem"}'
+  ```  
+  Example in DSN format:  
+  ```bash
+  --variables="SQLD_DB_PATH=/your/database/path;SQLD_HTTP_LISTEN_ADDR=127.0.0.1:8080;SQLD_AUTH_JWT_KEY_FILE=/path/to/jwt_key.pem"
+  ```
+
+- **`--force`**  
+  Forces the creation of the environment by overwriting it if an environment with the same name already exists.
+
+**Examples:**
+
+1. Create a new environment named `development` with variables in JSON format:  
+   ```bash
+   sqld:env-new development --variables='{"SQLD_DB_PATH": "/your/database/path", "SQLD_HTTP_LISTEN_ADDR": "127.0.0.1:8080", "SQLD_AUTH_JWT_KEY_FILE": "/path/to/jwt_key.pem"}'
+   ```
+
+2. Create a new environment named `production` with variables in DSN format:  
+   ```bash
+   sqld:env-new production --variables="SQLD_DB_PATH=/your/database/path;SQLD_HTTP_LISTEN_ADDR=127.0.0.1:8080;SQLD_AUTH_JWT_KEY_FILE=/path/to/jwt_key.pem"
+   ```
+
+3. Overwrite an existing environment named `staging`:  
+   ```bash
+   sqld:env-new staging --force
+   ```
+
+This command is useful for setting up and managing different environments (e.g., development, staging, production) with their respective configurations for `sqld`.

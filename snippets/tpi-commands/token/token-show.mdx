@@ -1,0 +1,54 @@
+### `token:show`
+ 
+Displays the libSQL Server Database token or related details for local development.
+
+**Usage:**  
+```bash
+token:show [options] [--] <db-name>
+```
+
+**Arguments:**
+
+- **`<db-name>`**  
+  The name of the database for which to display the token or other related details.
+
+**Options:**
+
+- **`--fat`**  
+  Display only the full access token.
+
+- **`--roa`**  
+  Display only the read-only access token.
+
+- **`--pkp`**  
+  Display only the public key in PEM format.
+
+- **`--pkb`**  
+  Display only the public key in Base64 format.
+
+**Examples:**
+
+1. Show all tokens and public key details for the `my_database` database:  
+   ```bash
+   token:show my_database
+   ```
+
+2. Show only the full access token for the `my_database` database:  
+   ```bash
+   token:show --fat my_database
+   ```
+
+3. Show only the read-only access token for the `my_database` database:  
+   ```bash
+   token:show --roa my_database
+   ```
+
+4. Show only the public key in PEM format for the `my_database` database:  
+   ```bash
+   token:show --pkp my_database
+   ```
+
+5. Show only the public key in Base64 format for the `my_database` database:  
+   ```bash
+   token:show --pkb my_database
+   ```

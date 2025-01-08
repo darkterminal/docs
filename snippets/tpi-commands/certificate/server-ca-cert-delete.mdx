@@ -1,0 +1,38 @@
+### `server:ca-cert-delete`
+ 
+Deletes a specific Certificate Authority (CA) certificate or all CA certificates from the global store location.
+
+**Usage:**  
+```bash
+server:ca-cert-delete [options] [--] [<name>]
+```
+
+**Arguments:**
+
+- **`<name>`**  
+  The name of the CA certificate to delete. Defaults to `"ca"` if not specified.  
+  Example: `my-ca-cert`.
+
+**Options:**
+
+- **`--all`**  
+  Deletes all CA certificates from the global store location. Use this option with caution as it is irreversible.
+
+**Examples:**
+
+1. Delete a specific CA certificate with the default name `ca`:  
+   ```bash
+   server:ca-cert-delete
+   ```
+
+2. Delete a specific CA certificate with a custom name `my-ca-cert`:  
+   ```bash
+   server:ca-cert-delete my-ca-cert
+   ```
+
+3. Delete all CA certificates from the global store location:  
+   ```bash
+   server:ca-cert-delete --all
+   ```
+
+This command is useful for removing outdated or unnecessary CA certificates to maintain a clean global store. Ensure you specify the correct certificate name or use the `--all` option carefully.

@@ -35,7 +35,7 @@ class LibSQLStatement
 
 ## Description
 
-- `__construct(string $conn_id, string $sql)`: instances are created by [`LibSQL::prepare()`](/dark-extensions/libsql-class/prepare).
+- `__construct(string $conn_id, string $sql)`: instances are created by [`LibSQL::prepare()`](/dark-extensions/references/libsql#prepare).
 - `finalize()`: Finalizes the prepared statement, releasing any resources associated with it.
 - `execute(array $parameters): int`: Executes the prepared statement with the specified parameters and returns the number of affected rows.
 - `query(array $parameters): array`: Executes the prepared statement with the specified parameters and retrieves the result set as an array.

@@ -1,0 +1,39 @@
+### `server:ca-peer-cert-create`
+ 
+Creates a peer certificate signed by the Certificate Authority (CA).
+
+**Usage:**  
+```bash
+server:ca-peer-cert-create [options] [--] [<name>]
+```
+
+**Arguments:**
+
+- **`<name>`**  
+  The name of the peer certificate to generate. Defaults to `"ca"` if not specified.  
+  Example: `peer-cert-1`.
+
+**Options:**
+
+- **`--expiry[=EXPIRY]`**  
+  The expiration period of the peer certificate in days. Defaults to 30 days.  
+  Example: `--expiry=60` sets the certificate to expire in 60 days.
+
+**Examples:**
+
+1. Create a peer certificate with the default name `ca` and a 30-day expiration:  
+   ```bash
+   server:ca-peer-cert-create
+   ```
+
+2. Create a peer certificate with a custom name `peer-cert-1` and the default 30-day expiration:  
+   ```bash
+   server:ca-peer-cert-create peer-cert-1
+   ```
+
+3. Create a peer certificate with a custom name and a 60-day expiration:  
+   ```bash
+   server:ca-peer-cert-create --expiry=60 peer-cert-1
+   ```
+
+This command is useful for generating peer certificates for secure communication between entities, such as servers or clients, during development or testing.
